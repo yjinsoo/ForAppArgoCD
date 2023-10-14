@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: jinii1004/my-mariadb-image:4.0
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - mariadb -h pro3-db-service -u root -pdkagh1. -e "select  'browser','upper','pants','shoes','service','registration_date' union select * from mydb.survey INTO OUTFILE '/var/lib/mysql/testing.csv' FIELDS TERMINATED BY ','LINES TERMINATED BY '\n';"
+          restartPolicy: OnFailure
